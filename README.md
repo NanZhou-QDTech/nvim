@@ -68,7 +68,7 @@ optionals
 - format
 
 # References
-[Advent of nvim - by TJdevries ](https://github.com/tjdevries/advent-of-nvim)
-[Minimals Neovim config - by SylvanFranklin](https://github.com/SylvanFranklin/.config)
-[Neovim config with less than 10 plugins - by radleylewis](https://github.com/radleylewis/nvim-lite)
-[Official Doc of tree-sitter](https://tree-sitter.github.io/tree-sitter/index.html)
+- [Advent of nvim - by TJdevries ](https://github.com/tjdevries/advent-of-nvim)
+- [Minimals Neovim config - by SylvanFranklin](https://github.com/SylvanFranklin/.config/tree/main/nvim)
+- [Neovim config with less than 10 plugins - by radleylewis](https://github.com/radleylewis/nvim-lite)
+- [Official Doc of tree-sitter](https://tree-sitter.github.io/tree-sitter/index.html)
