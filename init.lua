@@ -258,6 +258,11 @@ vim.pack.add({
     "https://github.com/nvim-mini/mini.nvim",
     -- Markdown file support
     "https://github.com/MeanderingProgrammer/render-markdown.nvim",
+    -- Auto Completion with rich configuration
+    {
+            src = "https://github.com/saghen/blink.cmp",
+            version = "*",
+        },
 
 })
 
@@ -322,6 +327,7 @@ require('mini.icons').setup({})
 require('mini.comment').setup({})
 require('mini.surround').setup({})
 require('mini.pairs').setup({})
+require('mini.snippets').setup({})
 
 require("oil").setup({
     default_file_explorer = false,
@@ -365,6 +371,32 @@ set("n", "-", "<CMD>Oil<CR>", { desc = "Open Parent Directory" })
 -- Treesitter
 vim.api.nvim_create_autocmd("FileType", {
     callback = function() pcall(vim.treesitter.start) end,
+})
+
+
+-- Auto Completions
+require('blink.cmp').setup({
+        keymap = { preset = "default" },
+        -- appearance = { nerd_font_variant = "mono" },
+        sources = {
+            default = {
+                "lsp",
+                "snippets",
+                "path",
+                "buffer",
+            },
+        },
+        completion = {
+            menu = {
+                border = "rounded",
+            },
+            documentation = { auto_show = true },
+            ghost_text = { enabled = true },
+        },
+        snippets = {
+            preset = "mini_snippets",
+        },
+        fuzzy = { implementation = "prefer_rust_with_warning" },
 })
 
 -- LSP
@@ -435,6 +467,12 @@ vim.api.nvim_create_user_command("Mason", function()
 
 end, { desc = "Init Mason" })
 
+local capabilities = require("blink.cmp").get_lsp_capabilities()
+
+vim.lsp.config("*",
+{
+  capabilities = capabilities,
+})
 
 vim.lsp.enable({
   -- Lua
@@ -443,7 +481,6 @@ vim.lsp.enable({
   "ty",
   "ruff",
 })
-
 
 -- Utils
 vim.api.nvim_create_autocmd("TextYankPost", {
