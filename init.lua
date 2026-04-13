@@ -261,7 +261,7 @@ vim.pack.add({
     -- Auto Completion with rich configuration
     {
             src = "https://github.com/saghen/blink.cmp",
-            version = "*",
+            version = "1.*",
         },
 
 })
