@@ -259,11 +259,7 @@ vim.pack.add({
     -- Markdown file support
     "https://github.com/MeanderingProgrammer/render-markdown.nvim",
     -- Auto Completion with rich configuration
-    {
-            src = "https://github.com/saghen/blink.cmp",
-            version = "1.*",
-        },
-
+    "https://github.com/saghen/blink.cmp",
 })
 
 
@@ -312,6 +308,9 @@ vim.api.nvim_create_autocmd("PackChanged", {
             end
             -- Treesitter Initial end
             vim.cmd("TSUpdate")
+        end
+        if name == "blink.cmp" and (kind == "install" or kind == "update") then
+            vim.system({ "cargo", "build", "--release" }, { cwd = ev.data.path })
         end
     end,
 })
@@ -396,7 +395,7 @@ require('blink.cmp').setup({
         snippets = {
             preset = "mini_snippets",
         },
-        fuzzy = { implementation = "prefer_rust_with_warning" },
+        fuzzy = { implementation = "prefer_rust" },
 })
 
 -- LSP
