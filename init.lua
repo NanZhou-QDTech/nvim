@@ -415,6 +415,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client and client.name == "ruff" then
       client.server_capabilities.hoverProvider = false
     end
+    if client and client.name == "marksman" then
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
+    end
     local map = function(mode, lhs, rhs, desc)
       vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
     end
@@ -475,7 +479,10 @@ vim.api.nvim_create_user_command("Mason", function()
   vim.cmd("Mason")
 end, { desc = "Init Mason" })
 
-local capabilities = require("blink.cmp").get_lsp_capabilities()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+pcall(function()
+  capabilities = require("blink.cmp").get_lsp_capabilities()
+end)
 
 vim.lsp.config("*",
   {
@@ -487,9 +494,6 @@ vim.filetype.add({
   extension = {
     mdx = "markdown"
   },
-})
-vim.lsp.config("marksman", {
-  filetypes = { "markdown" },
 })
 
 vim.lsp.enable({

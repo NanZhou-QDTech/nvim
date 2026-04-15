@@ -1,3 +1,4 @@
 return {
-  root_markers = { ".obsidian", ".git" },
+  filetype = { "markdown" },
+  root_markers = { "rumdl.toml", ".rumdl.toml", ".obsidian", ".git" },
 }
