@@ -174,52 +174,52 @@ set("t", "<A-k>", "<C-\\><C-n><C-w>k", { desc = "Go to Below Window in Terminal"
 
 -- Builtin Harpoon-like
 set("n", "<leader>aa", function()
-    vim.cmd("$argadd %")
-    vim.cmd("argdedup") -- fix duplicate
-end,
-{ desc = "Arglist Add Current File" })
+        vim.cmd("$argadd %")
+        vim.cmd("argdedup") -- fix duplicate
+    end,
+    { desc = "Arglist Add Current File" })
 
 
 set("n", "<leader>ad", function()
-    vim.cmd("$argdelete %")
-end,
-{ desc = "Arglist Delete Current File" })
+        vim.cmd("$argdelete %")
+    end,
+    { desc = "Arglist Delete Current File" })
 
 
 set("n", "<leader>al", function()
-    vim.cmd("args")
-end,
-{ desc = "Arglist Show" })
+        vim.cmd("args")
+    end,
+    { desc = "Arglist Show" })
 
 
 set("n", "<leader>a1", function()
-    vim.cmd("silent! 1argument")
-end,
-{ desc = "Arglist Go To Number 1 pos" })
+        vim.cmd("silent! 1argument")
+    end,
+    { desc = "Arglist Go To Number 1 pos" })
 
 
 set("n", "<leader>a2", function()
-    vim.cmd("silent! 2argument")
-end,
-{ desc = "Arglist Go To Number 2 pos" })
+        vim.cmd("silent! 2argument")
+    end,
+    { desc = "Arglist Go To Number 2 pos" })
 
 
 set("n", "<leader>a3", function()
-    vim.cmd("silent! 3argument")
-end,
-{ desc = "Arglist Go To Number 3 pos" })
+        vim.cmd("silent! 3argument")
+    end,
+    { desc = "Arglist Go To Number 3 pos" })
 
 
 set("n", "<leader>a4", function()
-    vim.cmd("silent! 4argument")
-end,
-{ desc = "Arglist Go To Number 4 pos" })
+        vim.cmd("silent! 4argument")
+    end,
+    { desc = "Arglist Go To Number 4 pos" })
 
 
 set("n", "<leader>a5", function()
-    vim.cmd("silent! 5argument")
-end,
-{ desc = "Arglist Go To Number 5 pos" })
+        vim.cmd("silent! 5argument")
+    end,
+    { desc = "Arglist Go To Number 5 pos" })
 
 set("n", "<Esc>", "<CMD>nohl<CR>", { noremap = true, desc = "cancel highlight" })
 set("n", "G", "Gzz", { noremap = true, desc = "Go Bottom and Centered" })
@@ -237,12 +237,12 @@ vim.cmd.packadd("nvim.difftool")
 
 -- Third Party Plugins
 vim.pack.add({
-  -- Plenary for useful collection of lua functions
-  "https://github.com/nvim-lua/plenary.nvim",
+    -- Plenary for useful collection of lua functions
+    "https://github.com/nvim-lua/plenary.nvim",
     -- Treesitter Parsers and Queries download and manage
     {
-            src = "https://github.com/nvim-treesitter/nvim-treesitter",
-            version = "main",
+        src = "https://github.com/nvim-treesitter/nvim-treesitter",
+        version = "main",
     },
 
     -- Enhance textobject with treesitter
@@ -262,8 +262,10 @@ vim.pack.add({
     "https://github.com/MeanderingProgrammer/render-markdown.nvim",
     -- Obsidian Integration
     "https://github.com/epwalsh/obsidian.nvim",
-    -- Auto Completion with rich configuration
-    "https://github.com/saghen/blink.cmp",
+    -- LSP Enhance
+    "https://github.com/saghen/blink.cmp",       -- AutoCompletion
+    "https://github.com/stevearc/conform.nvim",  -- Format
+    "https://github.com/mfussenegger/nvim-lint", -- Linting
 })
 
 
@@ -379,27 +381,27 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Auto Completions
 require("blink.cmp").setup({
-        keymap = { preset = "default" },
-        -- appearance = { nerd_font_variant = "mono" },
-        sources = {
-            default = {
-                "lsp",
-                "snippets",
-                "path",
-                "buffer",
-            },
+    keymap = { preset = "default" },
+    -- appearance = { nerd_font_variant = "mono" },
+    sources = {
+        default = {
+            "lsp",
+            "snippets",
+            "path",
+            "buffer",
         },
-        completion = {
-            menu = {
-                border = "rounded",
-            },
-            documentation = { auto_show = true },
-            ghost_text = { enabled = true },
+    },
+    completion = {
+        menu = {
+            border = "rounded",
         },
-        snippets = {
-            preset = "mini_snippets",
-        },
-        fuzzy = { implementation = "prefer_rust" },
+        documentation = { auto_show = true },
+        ghost_text = { enabled = true },
+    },
+    snippets = {
+        preset = "mini_snippets",
+    },
+    fuzzy = { implementation = "prefer_rust" },
 })
 
 -- LSP
@@ -407,8 +409,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
     group = "UserLSPConfig",
     callback = function(event)
         vim.opt.signcolumn = "yes:2"
-        local client = assert(vim.lsp.get_client_by_id(event.data.client_id))
-        local bufnr  = event.buf
+        local client       = assert(vim.lsp.get_client_by_id(event.data.client_id))
+        local bufnr        = event.buf
         -- Disable Ruff"s hover in favor of ty"s richer hover
         if client and client.name == "ruff" then
             client.server_capabilities.hoverProvider = false
@@ -418,24 +420,24 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end
 
         -- Navigation
-        map("n", "gd",  vim.lsp.buf.definition,      "Go to Definition")
-        map("n", "gD",  vim.lsp.buf.declaration,     "Go to Declaration")
-        map("n", "gri",  vim.lsp.buf.implementation,  "Go to Implementation")
-        map("n", "grr",  vim.lsp.buf.references,      "References")
-        map("n", "K",   vim.lsp.buf.hover,           "Hover Documentation")
+        map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
+        map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
+        map("n", "gri", vim.lsp.buf.implementation, "Go to Implementation")
+        map("n", "grr", vim.lsp.buf.references, "References")
+        map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
 
         -- Code actions & Rename
         map("n", "gra", vim.lsp.buf.code_action, "Code Action")
-        map("n", "grn", vim.lsp.buf.rename,      "Rename Symbol")
+        map("n", "grn", vim.lsp.buf.rename, "Rename Symbol")
 
         -- Diagnostics
         local diagnostics = vim.diagnostic.get(bufnr)
-        local has_diagnostics = #diagnostics> 0
+        local has_diagnostics = #diagnostics > 0
         if has_diagnostics then
-          -- map("n", "<leader>e", vim.diagnostic.open_float, "Show Diagnostics")
-          map("n", "[d",        vim.diagnostic.jump({ count=1, float=true }),  "Previous Diagnostic")
-          map("n", "]d",        vim.diagnostic.jump({count=-1, float=true }),  "Next Diagnostic")
-          map("n", "<leader>q", vim.diagnostic.setloclist, "Diagnostics List")
+            -- map("n", "<leader>e", vim.diagnostic.open_float, "Show Diagnostics")
+            map("n", "[d", vim.diagnostic.jump({ count = 1, float = true }), "Previous Diagnostic")
+            map("n", "]d", vim.diagnostic.jump({ count = -1, float = true }), "Next Diagnostic")
+            map("n", "<leader>q", vim.diagnostic.setloclist, "Diagnostics List")
         end
 
         -- Format with Ruff on demand
@@ -447,8 +449,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
             })
         end, "Format with Ruff")
         if client:supports_method("textDocument/completion") then
-                vim.o.complete = "o,.,w,b,u,t"
-                vim.lsp.completion.enable(true, client.id, bufnr)
+            vim.o.complete = "o,.,w,b,u,t"
+            vim.lsp.completion.enable(true, client.id, bufnr)
         end
     end,
 })
@@ -471,50 +473,122 @@ vim.api.nvim_create_user_command("Mason", function()
         },
     })
     vim.cmd("Mason")
-
 end, { desc = "Init Mason" })
 
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 vim.lsp.config("*",
-{
-  capabilities = capabilities,
-})
+    {
+        capabilities = capabilities,
+    })
 
 -- Solve markdown.mdx filetype issues
 vim.filetype.add({
-  extension = {
-    mdx = "markdown"
-  },
+    extension = {
+        mdx = "markdown"
+    },
 })
 vim.lsp.config("marksman", {
-  filetypes = { "markdown" },
+    filetypes = { "markdown" },
 })
 
 vim.lsp.enable({
-  -- Lua
-  "lua_ls",
-  -- Python
-  "ty",
-  "ruff",
-  -- Markdown
-  "marksman",
-  "rumdl",
+    -- Lua
+    "lua_ls",
+    -- Python
+    "ty",
+    "ruff",
+    -- Markdown
+    "marksman",
+    "rumdl",
 })
+
+-- LSP Enhance
+-- Linting
+require("lint").linters_by_ft = {
+    lua = { "luac" },
+    python = { "ruff" },
+    markdown = { "rumdl" },
+}
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+    callback = function()
+        -- try_lint without arguments runs the linters defined in `linters_by_ft`
+        -- for the current filetype
+        require("lint").try_lint()
+
+        -- You can call `try_lint` with a linter name or a list of names to always
+        -- run specific linters, independent of the `linters_by_ft` configuration
+        require("lint").try_lint("cspell")
+    end,
+})
+-- Format
+require("conform").setup({
+    formatters_by_ft = {
+        -- lua = { "stylua" },
+        python = { "ruff" },
+        markdown = { "rumdl" },
+
+        -- Use LSP Format if no cli
+        ["_"] = { "lsp_format" }
+    },
+    formatters = {},
+    format_on_save = function(bufnr)
+        if vim.api.nvim_buf_line_count(bufnr) > 10000 then
+            return
+        end
+        return {
+            timeout_ms = 500,
+            lsp_format = "fallback",
+        }
+    end,
+    notify_on_error = true,
+    format_after_save = function(bufnr)
+        if vim.g.disable_autoformat then
+            return
+        end
+        return {
+            async = true,
+            lsp_format = "fallback",
+        }
+    end
+})
+vim.api.nvim_create_user_command("Format", function(args)
+    local range = nil
+    if args.count ~= -1 then
+        local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+        range = {
+            start = { args.line1, 0 },
+            ["end"] = { args.line2, end_line:len() },
+        }
+    end
+    require("conform").format({ async = true, lsp_format = "fallback", range = range })
+end, { range = true })
+vim.keymap.set({ "n", "v" }, "<leader>fm", function()
+    require("conform").format({ async = true, lsp_format = "fallback" })
+end, { desc = "Format buffer" })
+-- Toggle format on save
+vim.api.nvim_create_user_command("FormatDisable", function()
+    vim.g.disable_autoformat = true
+end, { desc = "Disable format on save" })
+
+vim.api.nvim_create_user_command("FormatEnable", function()
+    vim.g.disable_autoformat = false
+end, { desc = "Enable format on save" })
+
 
 -- Obsidian Integration
 vim.api.nvim_create_autocmd("FileType", {
-  group = "PluginConfig",
-  pattern = { "markdown" },
-  callback = function()
-    require("plenary")
-    require("render-markdown").setup({})
-    require("obsidian").setup({
-      workspaces = {
-        { name = "work", path = "~/work/worknote" },
-      },
-    })
-  end,
+    group = "PluginConfig",
+    pattern = { "markdown" },
+    callback = function()
+        require("plenary")
+        require("render-markdown").setup({})
+        require("obsidian").setup({
+            workspaces = {
+                { name = "work", path = "~/work/worknote" },
+            },
+        })
+    end,
 })
 
 
