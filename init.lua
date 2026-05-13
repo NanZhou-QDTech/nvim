@@ -3,7 +3,8 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.encoding = "UTF-8"
-vim.g.python3_host_prog = "C:/Users/youar/projects/neovimpy/.venv/Scripts/python.exe"
+vim.g.python3_host_prog = "C:/Users/youar/projects/neovimpy/.venv/Scripts/python"
+vim.env.TERM = "pwsh"
 
 -- Editor UI
 vim.opt.scrolloff = 8
@@ -105,6 +106,7 @@ vim.opt.completeopt = {
 vim.opt.wildmenu = true
 vim.opt.wildmode = "longest:full,full"
 vim.opt.pumheight = 10
+vim.opt.complete:prepend({ "o" })
 vim.opt.wildoptions:append({ "fuzzy" })
 
 -- Editor LSP
@@ -263,9 +265,10 @@ vim.pack.add({
   -- Obsidian Integration
   "https://github.com/epwalsh/obsidian.nvim",
   -- LSP Enhance
-  "https://github.com/saghen/blink.cmp",       -- AutoCompletion
-  "https://github.com/stevearc/conform.nvim",  -- Format
-  "https://github.com/mfussenegger/nvim-lint", -- Linting
+  "https://github.com/saghen/blink.lib",
+  { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("2.*") }, -- AutoCompletion
+  "https://github.com/stevearc/conform.nvim",                                          -- Format
+  "https://github.com/mfussenegger/nvim-lint",                                         -- Linting
 })
 
 
@@ -316,7 +319,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
       vim.cmd("TSUpdate")
     end
     if name == "blink.cmp" and (kind == "install" or kind == "update") then
-      vim.system({ "cargo", "build", "--release" }, { cwd = ev.data.path })
+      requrie("blink.cmp").download({ force = true, tags = "*" }):wait(60000)
     end
   end,
 })
@@ -453,14 +456,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
       })
     end, "Format with Ruff")
     if client:supports_method("textDocument/completion") then
-      vim.o.complete = "o,.,w,b,u,t"
-      vim.lsp.completion.enable(true, client.id, bufnr)
+      vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
     end
   end,
 })
 
-
-vim.api.nvim_create_user_command("Mason", function()
+vim.defer_fn(function()
   require("mason").setup({
     -- Log level
     log_level = vim.log.levels.DEBUG, -- Useful for troubleshooting
@@ -476,8 +477,7 @@ vim.api.nvim_create_user_command("Mason", function()
       }
     },
   })
-  vim.cmd("Mason")
-end, { desc = "Init Mason" })
+end, 300)
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 pcall(function()
@@ -584,13 +584,13 @@ end, { desc = "Enable format on save" })
 -- Obsidian Integration
 vim.api.nvim_create_autocmd("FileType", {
   group = "PluginConfig",
-  pattern = { "markdown" },
+  pattern = { "md" },
   callback = function()
     require("plenary")
     require("render-markdown").setup({})
     require("obsidian").setup({
       workspaces = {
-        { name = "work", path = "~/work/worknote" },
+        { name = "working", path = "~/working/worknote" },
       },
     })
   end,
