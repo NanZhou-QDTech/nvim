@@ -15,27 +15,22 @@ NeoVIM Configs
 requirements
 - tar
 - curl
-- tree-sitter-cli: `cargo install --locded tree-sitter-cli`
+- tree-sitter-cli: `cargo install --locked tree-sitter-cli`
 - c compiler
   - Windows: MingW/MSYS2
   - Linux: build-essential/cmake
 
-**Fuzzy Finder**: [fzf-lua](https://github.com/ibhagwan/fzf-lua)
-- pickers
-requirements
-- fzf
-  - Windows: `scoop install fzf`
-optionals
-- fd
-- ripgrep(rg)
+**Grep**: `grepprg` runs [ripgrep](https://github.com/BurntSushi/ripgrep)
+- Windows: `scoop install ripgrep`
 
 **Utils Collections**: [mini.nvim](https://github.com/nvim-mini/mini.nvim)
 - icons
 - comment
 - surround
 - pairs
+- snippets
 
-## Language Server Protocal
+## Language Server Protocol
 
 ### Lua
 [lua_ls](https://github.com/LuaLS/lua-language-server)

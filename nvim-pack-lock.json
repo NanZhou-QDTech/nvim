@@ -21,10 +21,6 @@
       "rev": "48555f1615f08c6318150aacb52bf7d61a5af798",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
-    "none-ls.nvim": {
-      "rev": "241ff8214b4ec051eb51e74a61ff729c0271b429",
-      "src": "https://github.com/nvimtools/none-ls.nvim"
-    },
     "nvim-lint": {
       "rev": "eab58b48eb11d7745c11c505e0f3057165902461",
       "src": "https://github.com/mfussenegger/nvim-lint"

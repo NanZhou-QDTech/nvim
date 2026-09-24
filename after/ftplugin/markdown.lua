@@ -1,10 +1,3 @@
--- Auto Format on Save
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.md",
-  callback = function()
-    vim.lsp.buf.format({
-      async = false,
-      filter = function(client) return client.name == "rumdl" end,
-    })
-  end,
-})
+-- Prose: wrap at 80 columns. Code filetypes keep textwidth=0.
+-- Formatting on save is handled by conform (see init.lua), not here.
+vim.bo.textwidth = 80
